@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Lista de Noticias</h1>
+  <a href="{% url 'news:crear_noticia' %}" class="btn btn-primary">Crear Noticia</a>
+  <ul>
+    {% for noticia in noticias %}
+      <li>
+        {{ noticia.title }} - <a href="{% url 'news:editar_noticia' noticia.pk %}">Editar</a> |
+        <a href="{% url 'news:eliminar_noticia' noticia.pk %}">Eliminar</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

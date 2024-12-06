@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Eliminar Noticia</h1>
+  <p>¿Estás seguro de que deseas eliminar "{{ noticia.title }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+  </form>
+  <a href="{% url 'news:lista_noticias' %}" class="btn btn-secondary">Cancelar</a>
+{% endblock %}

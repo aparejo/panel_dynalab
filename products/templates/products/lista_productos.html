@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Lista de Productos</h1>
+  <a href="{% url 'products:crear_producto' %}" class="btn btn-primary">Crear Producto</a>
+  <ul>
+    {% for producto in productos %}
+      <li>
+        {{ producto.name }} - <a href="{% url 'products:editar_producto' producto.pk %}">Editar</a> |
+        <a href="{% url 'products:eliminar_producto' producto.pk %}">Eliminar</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

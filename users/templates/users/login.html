@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #fcbbfc, #0091f8);
+            overflow: hidden;
+        }
+
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .background span {
+            position: absolute;
+            display: block;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: move 6s infinite ease-in-out;
+        }
+
+        .background span:nth-child(1) {
+            top: 10%;
+            left: 15%;
+        }
+
+        .background span:nth-child(2) {
+            top: 40%;
+            left: 75%;
+        }
+
+        .background span:nth-child(3) {
+            top: 70%;
+            left: 25%;
+        }
+
+        @keyframes move {
+            0%, 100% {
+                transform: translateY(-10px);
+            }
+            50% {
+                transform: translateY(10px);
+            }
+        }
+
+        .login-container {
+            position: relative;
+            width: 400px;
+            padding: 30px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-container img {
+            width: 200px;
+            margin-bottom: 20px;
+        }
+
+        .login-container h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .login-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-container input {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #fff;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-container button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #f8b500;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-container button:hover {
+            background: #c27d00;
+        }
+
+        .login-container a {
+            font-size: 14px;
+            color: #555;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .login-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="login-container">
+        <img src="https://web.dynalabglobal.com/static/media/Dynalab-logo.c9490f699db9d7963132.png" alt="Logo">
+        <h2>Iniciar Sesión</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Usuario" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <button type="submit">Ingresar</button>
+        </form>
+        <a href="#">¿Olvidaste tu contraseña?</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm p-4">
+        <h2 class="text-center mb-4">Crear Producto</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="name" class="form-label">Nombre *</label>
+                    {{ formulario.name }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="presentation" class="form-label">Presentación *</label>
+                    {{ formulario.presentation }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="active_ingredient" class="form-label">Principio Activo *</label>
+                    {{ formulario.active_ingredient }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="category" class="form-label">Categoría *</label>
+                    {{ formulario.category }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="status" class="form-label">Estado *</label>
+                    {{ formulario.status }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="sanitary_registration" class="form-label">Registro Sanitario *</label>
+                    {{ formulario.sanitary_registration }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="indications" class="form-label">Indicaciones *</label>
+                {{ formulario.indications }}
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="url" class="form-label">URL del Producto</label>
+                    {{ formulario.url }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="image" class="form-label">Imagen del Producto</label>
+                    <div class="drag-drop">
+                        {{ formulario.image }}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="prospect_pdf" class="form-label">Prospecto PDF</label>
+                <div class="drag-drop">
+                    {{ formulario.prospect_pdf }}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Guardar Producto</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .container {
+        max-width: 900px;
+    }
+
+    .card {
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        background-color: #fff;
+    }
+
+    .form-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+        display: block;
+        width: 100%;
+        padding: 8px 12px;
+        font-size: 16px;
+        line-height: 1.5;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    input:focus, select:focus, textarea:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
+    }
+
+    .drag-drop {
+        border: 2px dashed #ccc;
+        border-radius: 5px;
+        padding: 20px;
+        text-align: center;
+        background-color: #f9f9f9;
+    }
+
+    .drag-drop input[type="file"] {
+        display: none;
+    }
+
+    .drag-drop label {
+        font-size: 16px;
+        color: #666;
+        cursor: pointer;
+    }
+
+    .drag-drop:hover {
+        background-color: #f0f0f0;
+    }
+</style>
+{% endblock %}
