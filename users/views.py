@@ -10,10 +10,13 @@ from users.models import User
 from django.contrib import messages
 
 # Listar usuarios
+
+@role_required(allowed_roles=['admin'])
 def lista_usuarios(request):
     usuarios = User.objects.all()
     return render(request, 'users/lista_usuarios.html', {'usuarios': usuarios})
 
+@role_required(allowed_roles=['admin'])
 # Crear usuario
 def crear_usuario(request):
     if request.method == 'POST':
@@ -26,6 +29,7 @@ def crear_usuario(request):
     return render(request, 'users/formulario_usuario.html', {'formulario': formulario})
 
 # Editar usuario
+@role_required(allowed_roles=['admin'])
 def editar_usuario(request, pk):
     usuario = User.objects.get(pk=pk)
     if request.method == 'POST':
@@ -37,6 +41,7 @@ def editar_usuario(request, pk):
         formulario = UserEditForm(instance=usuario)
     return render(request, 'users/formulario_usuario.html', {'formulario': formulario})
 
+@role_required(allowed_roles=['admin'])
 # Eliminar usuario
 def eliminar_usuario(request, pk):
     usuario = User.objects.get(pk=pk)
