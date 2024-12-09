@@ -1,14 +1,105 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Lista de Noticias</h1>
-  <a href="{% url 'news:crear_noticia' %}" class="btn btn-primary">Crear Noticia</a>
-  <ul>
-    {% for noticia in noticias %}
-      <li>
-        {{ noticia.title }} - <a href="{% url 'news:editar_noticia' noticia.pk %}">Editar</a> |
-        <a href="{% url 'news:eliminar_noticia' noticia.pk %}">Eliminar</a>
-      </li>
-    {% endfor %}
-  </ul>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Lista de Noticias</h2>
+
+    <!-- Botón flotante para agregar noticia -->
+    <a href="{% url 'news:crear_noticia' %}" class="btn btn-primary btn-floating">
+        <i class="fas fa-plus"></i> Agregar Noticia
+    </a>
+
+    <table class="table table-striped table-hover mt-3">
+        <thead class="table-primary">
+            <tr>
+                <th>Imagen</th>
+                <th>Título</th>
+                <th>Categoría</th>
+                <th>Etiquetas</th>
+                <th>Fecha Programada</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for noticia in noticias %}
+            <tr>
+                <!-- Imagen Miniatura -->
+                <td>
+                    {% if noticia.image %}
+                    <img src="{{ noticia.image.url }}" alt="{{ noticia.title }}" class="img-thumbnail" style="width: 80px; height: auto;">
+                    {% else %}
+                    <span class="text-muted">Sin Imagen</span>
+                    {% endif %}
+                </td>
+
+                <!-- Título -->
+                <td>{{ noticia.title }}</td>
+
+                <!-- Categoría -->
+                <td>{{ noticia.category.name }}</td>
+
+                <!-- Etiquetas -->
+                <td>
+                    {% if noticia.tags %}
+                    <span class="badge bg-info">{{ noticia.tags }}</span>
+                    {% else %}
+                    <span class="text-muted">Sin Etiquetas</span>
+                    {% endif %}
+                </td>
+
+                <!-- Fecha Programada -->
+                <td>{{ noticia.scheduled_date|date:"d/m/Y" }}</td>
+
+                <!-- Botones de Acción -->
+                <td>
+                    <a href="{% url 'news:editar_noticia' noticia.pk %}" class="btn btn-sm btn-warning" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="{% url 'news:eliminar_noticia' noticia.pk %}" class="btn btn-sm btn-danger" title="Eliminar">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .btn-floating {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        padding: 15px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-floating i {
+        font-size: 20px;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 123, 255, 0.1);
+    }
+
+    .img-thumbnail {
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .badge {
+        font-size: 14px;
+        padding: 5px 10px;
+        border-radius: 12px;
+    }
+</style>
 {% endblock %}

@@ -47,17 +47,20 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="image" class="form-label">Imagen del Producto</label>
-                    <div class="drag-drop">
+                    <div class="drag-drop" id="image-upload">
                         {{ formulario.image }}
+                        <label for="id_image">Seleccionar Archivo</label>
+                        <input id="id_image" type="file" name="image" class="form-control" accept="image/*">
                     </div>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="prospect_pdf" class="form-label">Prospecto PDF</label>
-                <div class="drag-drop">
+                <div class="drag-drop" id="pdf-upload">
                     {{ formulario.prospect_pdf }}
+                    <label for="id_prospect_pdf">Seleccionar Archivo</label>
+                    <input id="id_prospect_pdf" type="file" name="prospect_pdf" class="form-control" accept=".pdf">
                 </div>
-            </div>
             <button type="submit" class="btn btn-primary w-100">Guardar Producto</button>
         </form>
     </div>

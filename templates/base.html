@@ -19,8 +19,40 @@
             <div class="p-4">
                 <img src="https://web.dynalabglobal.com/static/media/Dynalab-logo.c9490f699db9d7963132.png" alt="Dynalab Logo" class="img-fluid mb-4">
                 <ul class="list-unstyled">
-                    <li><a href="{% url 'products:lista_productos' %}" class="text-decoration-none"><i class="fas fa-box"></i> Productos</a></li>
-                    <li><a href="{% url 'news:lista_noticias' %}" class="text-decoration-none"><i class="fas fa-newspaper"></i> Noticias</a></li>
+                    <li class="nav-item dropdown">
+                        <a 
+                            class="nav-link dropdown-toggle text-decoration-none" 
+                            href="#" 
+                            id="navbarDropdown" 
+                            role="button" 
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false">
+                            <i class="fas fa-box"></i> Productos
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'products:lista_productos' %}">Lista de Productos</a></li>
+                            <li><a class="dropdown-item" href="{% url 'products:crear_producto' %}">Agregar Producto</a></li>
+                            <li><a class="dropdown-item" href="{% url 'products:lista_categorias' %}">Lista de Categorías</a></li>
+                            <li><a class="dropdown-item" href="{% url 'products:crear_categoria' %}">Agregar Categoría</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a 
+                            class="nav-link dropdown-toggle text-decoration-none" 
+                            href="#" 
+                            id="newsDropdown" 
+                            role="button" 
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false">
+                            <i class="fas fa-newspaper"></i> Noticias
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="newsDropdown">
+                            <li><a class="dropdown-item" href="{% url 'news:lista_noticias' %}">Lista de Noticias</a></li>
+                            <li><a class="dropdown-item" href="{% url 'news:crear_noticia' %}">Agregar Noticia</a></li>
+                            <li><a class="dropdown-item" href="{% url 'news:lista_categorias' %}">Lista de Categorías</a></li>
+                            <li><a class="dropdown-item" href="{% url 'news:crear_categoria' %}">Agregar Categoría</a></li>
+                        </ul>
+                    </li>
                     <li><a href="{% url 'users:dashboard' %}" class="text-decoration-none"><i class="fas fa-chart-line"></i> Dashboard</a></li>
                     
                 </ul>

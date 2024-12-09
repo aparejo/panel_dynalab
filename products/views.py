@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Product, Category
-from .forms import ProductForm
+from .forms import ProductForm, CategoryForm
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .serializers import ProductSerializer
 
 # Listar productos
 def lista_productos(request):
@@ -38,3 +41,46 @@ def eliminar_producto(request, pk):
         producto.delete()
         return redirect('products:lista_productos')
     return render(request, 'products/confirmar_eliminar_producto.html', {'producto': producto})
+
+
+# Listar Categorías
+def lista_categorias(request):
+    categorias = Category.objects.all()
+    return render(request, 'products/lista_categorias.html', {'categorias': categorias})
+
+# Crear Categoría
+def crear_categoria(request):
+    if request.method == 'POST':
+        formulario = CategoryForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect('products:lista_categorias')
+    else:
+        formulario = CategoryForm()
+    return render(request, 'products/formulario_categoria.html', {'formulario': formulario})
+
+# Editar Categoría
+def editar_categoria(request, pk):
+    categoria = get_object_or_404(Category, pk=pk)
+    if request.method == 'POST':
+        formulario = CategoryForm(request.POST, instance=categoria)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect('products:lista_categorias')
+    else:
+        formulario = CategoryForm(instance=categoria)
+    return render(request, 'products/formulario_categoria.html', {'formulario': formulario})
+
+# Eliminar Categoría
+def eliminar_categoria(request, pk):
+    categoria = get_object_or_404(Category, pk=pk)
+    if request.method == 'POST':
+        categoria.delete()
+        return redirect('products:lista_categorias')
+    return render(request, 'products/confirmar_eliminar_categoria.html', {'categoria': categoria})
+
+class ProductListAPIView(APIView):
+    def get(self, request):
+        products = Product.objects.all()
+        serializer = ProductSerializer(products, many=True, context={'request': request})
+        return Response(serializer.data)

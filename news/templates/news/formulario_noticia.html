@@ -1,10 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>{% if formulario.instance.pk %}Editar{% else %}Crear{% endif %} Noticia</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ formulario.as_p }}
-    <button type="submit" class="btn btn-primary">Guardar</button>
-  </form>
+<div class="container mt-5">
+    <div class="card shadow-sm p-4">
+        <h2 class="text-center mb-4">Crear Noticia</h2>
+        <form method="POST" enctype="multipart/form-data"> <!-- Asegúrate de incluir enctype -->
+            {% csrf_token %}
+            <div class="row">
+                <!-- Primera Columna -->
+                <div class="col-md-6 mb-3">
+                    <label for="category" class="form-label">Categoría *</label>
+                    {{ formulario.category }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="scheduled_date" class="form-label">Fecha Programada *</label>
+                    {{ formulario.scheduled_date }}
+                </div>
+            </div>
+            <div class="row">
+                <!-- Segunda Columna -->
+                <div class="col-md-6 mb-3">
+                    <label for="tags" class="form-label">Etiquetas</label>
+                    {{ formulario.tags }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="image" class="form-label">Imagen</label>
+                    {{ formulario.image }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="title" class="form-label">Título *</label>
+                {{ formulario.title }}
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">Contenido *</label>
+                {{ formulario.content }}
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Guardar Noticia</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
