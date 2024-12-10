@@ -87,3 +87,29 @@ form button {
 form button:hover {
     background-color: #0056b3;
 }
+
+.drag-drop {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+}
+
+.drag-drop:hover {
+    background-color: #e8e8e8;
+}
+
+.drag-drop input[type="file"] {
+    display: none;
+}
+
+.drag-drop label {
+    display: block;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #555;
+    cursor: pointer;
+}

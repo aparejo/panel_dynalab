@@ -7,6 +7,7 @@
     <table class="table table-bordered">
         <thead>
             <tr>
+                <th>Icono</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Acciones</th>
@@ -15,6 +16,7 @@
         <tbody>
             {% for categoria in categorias %}
             <tr>
+                <td><img src="../../media/{{ categoria.icon }}" alt="{{ categoria.name }}" class="img-thumbnail" style="width: 80px; height: auto;"></td>
                 <td>{{ categoria.name }}</td>
                 <td>{{ categoria.description }}</td>
                 <td>

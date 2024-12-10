@@ -1,16 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from users.middleware import role_required
 from django.http import HttpResponse
 from .models import Product, Category
+from django.db.models import Q
 from .forms import ProductForm, CategoryForm
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import ProductSerializer
+from .serializers import ProductSerializer, CategorySerializer
 
 # Listar productos
+@role_required(allowed_roles=['admin', 'editor'])
 def lista_productos(request):
     productos = Product.objects.all()
     return render(request, 'products/lista_productos.html', {'productos': productos})
 
+@role_required(allowed_roles=['admin', 'editor'])
 # Crear producto
 def crear_producto(request):
     if request.method == 'POST':
@@ -22,6 +26,7 @@ def crear_producto(request):
         formulario = ProductForm()
     return render(request, 'products/formulario_producto.html', {'formulario': formulario})
 
+@role_required(allowed_roles=['admin', 'editor'])
 # Editar producto
 def editar_producto(request, pk):
     producto = Product.objects.get(pk=pk)
@@ -34,6 +39,7 @@ def editar_producto(request, pk):
         formulario = ProductForm(instance=producto)
     return render(request, 'products/formulario_producto.html', {'formulario': formulario})
 
+@role_required(allowed_roles=['admin', 'editor'])
 # Eliminar producto
 def eliminar_producto(request, pk):
     producto = Product.objects.get(pk=pk)
@@ -43,15 +49,17 @@ def eliminar_producto(request, pk):
     return render(request, 'products/confirmar_eliminar_producto.html', {'producto': producto})
 
 
+@role_required(allowed_roles=['admin', 'editor'])
 # Listar Categorías
 def lista_categorias(request):
     categorias = Category.objects.all()
     return render(request, 'products/lista_categorias.html', {'categorias': categorias})
 
+@role_required(allowed_roles=['admin', 'editor'])
 # Crear Categoría
 def crear_categoria(request):
     if request.method == 'POST':
-        formulario = CategoryForm(request.POST)
+        formulario = CategoryForm(request.POST, request.FILES)
         if formulario.is_valid():
             formulario.save()
             return redirect('products:lista_categorias')
@@ -59,18 +67,20 @@ def crear_categoria(request):
         formulario = CategoryForm()
     return render(request, 'products/formulario_categoria.html', {'formulario': formulario})
 
+@role_required(allowed_roles=['admin', 'editor'])
 # Editar Categoría
 def editar_categoria(request, pk):
     categoria = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
-        formulario = CategoryForm(request.POST, instance=categoria)
+        formulario = CategoryForm(request.POST, request.FILES, instance=categoria)
         if formulario.is_valid():
             formulario.save()
             return redirect('products:lista_categorias')
     else:
         formulario = CategoryForm(instance=categoria)
-    return render(request, 'products/formulario_categoria.html', {'formulario': formulario})
+    return render(request, 'products/formulario_categoria.html', {'formulario': formulario, 'categoria': categoria})
 
+@role_required(allowed_roles=['admin', 'editor'])
 # Eliminar Categoría
 def eliminar_categoria(request, pk):
     categoria = get_object_or_404(Category, pk=pk)
@@ -84,3 +94,21 @@ class ProductListAPIView(APIView):
         products = Product.objects.all()
         serializer = ProductSerializer(products, many=True, context={'request': request})
         return Response(serializer.data)
+    
+class CategoryListAPIView(APIView):
+    def get(self, request):
+        categories = Category.objects.all()
+        serializer = CategorySerializer(categories, many=True, context={'request': request})
+        return Response(serializer.data)
+
+def buscar_productos(request):
+    query = request.GET.get('q', '')  # Obtén el término de búsqueda del campo "q"
+    resultados = Product.objects.filter(
+        Q(name__icontains=query) | Q(description__icontains=query)
+    ) if query else Product.objects.all()
+
+    context = {
+        'resultados': resultados,
+        'query': query,
+    }
+    return render(request, 'products/buscar.html', context)

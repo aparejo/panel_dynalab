@@ -4,11 +4,19 @@
 <div class="container mt-5">
     <div class="card shadow-sm p-4">
         <h2 class="text-center mb-4">{% if formulario.instance.pk %}Editar{% else %}Crear{% endif %} Categoría</h2>
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
                 <label for="name" class="form-label">Nombre *</label>
                 {{ formulario.name }}
+            </div>
+            <div class="mb-3">
+                <label for="id_icon" class="form-label">Ícono de la Categoría</label>
+                <div class="drag-drop" id="icon-upload">
+                    {{ form.icon }}
+                    <label for="id_icon">Seleccionar Archivo</label>
+                    <input id="id_icon" type="file" name="icon" class="form-control" accept="image/*">
+                </div>
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Descripción</label>
